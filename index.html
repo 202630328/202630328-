@@ -12,15 +12,21 @@
             50% { transform: scale(1.03); }
         }
         .clock-anim { animation: pulse-subtle 4s infinite ease-in-out; }
+        
+        /* 윈도우 환경을 위한 깔끔한 커스텀 스크롤바 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
 <body class="bg-slate-200 min-h-screen text-slate-800 flex justify-center items-center p-3 sm:p-6">
 
-    <!-- 메인 앱 컨테이너 -->
-    <main class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-300 flex flex-col min-h-[620px]">
+    <!-- 메인 앱 컨테이너 (화면 높이의 95%를 넘지 않도록 제한하고 스크롤 허용) -->
+    <main class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl flex flex-col h-[750px] max-h-[95vh] border border-slate-300 overflow-hidden">
         
-        <!-- 상단 헤더 -->
-        <header class="bg-slate-100 border-b border-slate-200 px-6 py-3.5 flex items-center justify-between select-none">
+        <!-- 상단 헤더 (고정) -->
+        <header class="bg-slate-100 border-b border-slate-200 px-6 py-3.5 flex items-center justify-between select-none shrink-0">
             <div class="flex items-center gap-2 cursor-pointer" onclick="handleLogoClick()">
                 <span class="text-xl">⏰</span>
                 <span class="font-extrabold text-slate-800 tracking-tight text-base">MyTime</span>
@@ -39,11 +45,11 @@
             </div>
         </header>
 
-        <!-- 메인 컨텐츠 영역 -->
-        <div class="p-6 flex-1 flex flex-col justify-center">
+        <!-- 메인 컨텐츠 영역 (이 부분만 스크롤됨, flex-1 및 overflow-y-auto 적용) -->
+        <div class="p-4 sm:p-6 flex-1 overflow-y-auto flex flex-col">
             
-            <!-- STEP 1: 로그인 / 회원가입 -->
-            <section id="step1" class="step-content max-w-md mx-auto w-full space-y-5">
+            <!-- STEP 1: 로그인 / 회원가입 (my-auto를 주어 세로 중앙 정렬 유지) -->
+            <section id="step1" class="step-content max-w-md mx-auto w-full space-y-5 my-auto">
                 <div class="text-center space-y-1">
                     <h2 class="text-2xl font-black text-slate-900">마타임 시작하기</h2>
                     <p class="text-xs text-slate-500">시간표를 설정하려면 먼저 로그인해 주세요</p>
@@ -92,10 +98,10 @@
 
 
             <!-- STEP MAIN: 메인 화면 -->
-            <section id="stepMain" class="step-content hidden space-y-4">
+            <section id="stepMain" class="step-content hidden space-y-4 my-auto">
                 
                 <!-- 상단 인사말 배너 -->
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-4 rounded-2xl flex items-center justify-between">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-4 rounded-2xl flex items-center justify-between shrink-0">
                     <div>
                         <h2 class="text-base font-extrabold text-slate-800">
                             <span id="welcomeUserName" class="text-blue-600"></span>님, <span id="randomGreetingText">반갑습니다!</span>
@@ -105,10 +111,10 @@
                     <span class="text-2xl">✨</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch pb-4">
                     <!-- 좌측: 핵심 기능 버튼 2개 -->
                     <div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button onclick="openTodaySchedule()" class="flex flex-col items-center justify-center p-6 bg-white hover:bg-slate-50 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition group text-center">
+                        <button onclick="openTodaySchedule()" class="flex flex-col items-center justify-center p-6 bg-white hover:bg-slate-50 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition group text-center min-h-[180px]">
                             <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg shadow-orange-200 group-hover:scale-105 transition">
                                 ⏱️
                             </div>
@@ -116,7 +122,7 @@
                             <span class="text-xs text-slate-400 mt-1">오늘의 짬시간 정밀 분석</span>
                         </button>
 
-                        <button onclick="goToStep('stepWeekly')" class="flex flex-col items-center justify-center p-6 bg-white hover:bg-slate-50 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition group text-center">
+                        <button onclick="goToStep('stepWeekly')" class="flex flex-col items-center justify-center p-6 bg-white hover:bg-slate-50 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition group text-center min-h-[180px]">
                             <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg shadow-blue-200 group-hover:scale-105 transition">
                                 📅
                             </div>
@@ -126,7 +132,7 @@
                     </div>
 
                     <!-- 우측: 실시간 시계 카드 -->
-                    <div class="md:col-span-5 flex flex-col justify-between">
+                    <div class="md:col-span-5 flex flex-col justify-between min-h-[250px]">
                         <div class="bg-gradient-to-b from-slate-900 to-indigo-950 text-white rounded-2xl border border-slate-800 shadow-lg p-5 flex flex-col items-center text-center relative overflow-hidden h-full justify-center">
                             
                             <!-- 실시간 회전 시계 SVG -->
@@ -153,14 +159,13 @@
                         </div>
                     </div>
                 </div>
-
             </section>
 
 
             <!-- STEP WEEKLY: 주간 시간표 설정 -->
-            <section id="stepWeekly" class="step-content hidden max-w-xl mx-auto w-full space-y-5">
+            <section id="stepWeekly" class="step-content hidden max-w-xl mx-auto w-full space-y-5 pb-6">
                 
-                <div class="border-b pb-3 flex justify-between items-center">
+                <div class="border-b pb-3 flex justify-between items-center shrink-0">
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">주간 설정</span>
@@ -169,12 +174,12 @@
                         <h2 class="text-xl font-bold mt-1 text-slate-900">월~금 주간 시간표</h2>
                     </div>
                     
-                    <button onclick="goToStep('stepMain')" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5">
+                    <button onclick="goToStep('stepMain')" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5 shrink-0">
                         <span>🏠</span> 메인으로
                     </button>
                 </div>
 
-                <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-500">
+                <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-500 shrink-0">
                     <button id="dayTab-mon" onclick="switchDayTab('mon')" class="flex-1 py-2 rounded-lg bg-white text-blue-600 shadow-sm">월</button>
                     <button id="dayTab-tue" onclick="switchDayTab('tue')" class="flex-1 py-2 rounded-lg">화</button>
                     <button id="dayTab-wed" onclick="switchDayTab('wed')" class="flex-1 py-2 rounded-lg">수</button>
@@ -230,7 +235,7 @@
                     </div>
                 </div>
 
-                <div class="pt-2">
+                <div class="pt-2 shrink-0">
                     <button onclick="resetAllWeeklySchedule()" class="w-full bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3 rounded-xl transition border border-red-200 text-xs flex items-center justify-center gap-1">
                         <span>⚠️</span> 주간 시간표 전체 초기화
                     </button>
@@ -239,20 +244,20 @@
 
 
             <!-- STEP TODAY: 오늘 시간 계산하기 -->
-            <section id="stepToday" class="step-content hidden max-w-xl mx-auto w-full space-y-5">
+            <section id="stepToday" class="step-content hidden max-w-xl mx-auto w-full space-y-5 pb-6">
                 
-                <div class="border-b pb-3 flex justify-between items-center">
+                <div class="border-b pb-3 flex justify-between items-center shrink-0">
                     <div>
                         <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">TODAY</span>
                         <h2 class="text-xl font-bold mt-1 text-slate-900"><span id="todayDayName" class="text-blue-600"></span> 시간표 구체적 수정</h2>
                     </div>
                     
-                    <button onclick="goToStep('stepMain')" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5">
+                    <button onclick="goToStep('stepMain')" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5 shrink-0">
                         <span>🏠</span> 메인으로
                     </button>
                 </div>
 
-                <p class="text-xs text-slate-500">주간 시간표에서 불러온 오늘의 기본 틀입니다. 오늘 특이사항을 수정해 주세요.</p>
+                <p class="text-xs text-slate-500 shrink-0">주간 시간표에서 불러온 오늘의 기본 틀입니다. 오늘 특이사항을 수정해 주세요.</p>
 
                 <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -293,7 +298,7 @@
 
                     <div class="grid grid-cols-2 gap-3 bg-blue-50/50 p-3 rounded-xl border border-blue-100">
                         <div>
-                            <label class="block text-xs font-semibold text-blue-900 mb-1">🚶 이동 시간 (학원/학교 등)</label>
+                            <label class="block text-xs font-semibold text-blue-900 mb-1">🚶 이동 시간 (학원 등)</label>
                             <select id="todayCommuteHours" class="w-full p-2.5 border rounded-xl text-sm bg-white cursor-pointer">
                                 <option value="0">이동 거의 없음 (0분)</option>
                                 <option value="0.33">약 20분</option>
@@ -303,7 +308,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-blue-900 mb-1">🚿 샤워 및 씻기/준비 시간</label>
+                            <label class="block text-xs font-semibold text-blue-900 mb-1">🚿 씻기/준비 시간</label>
                             <select id="todayRoutineHours" class="w-full p-2.5 border rounded-xl text-sm bg-white cursor-pointer">
                                 <option value="0.33">간단히 (약 20분)</option>
                                 <option value="0.5" selected>보통 (약 30분)</option>
@@ -333,7 +338,7 @@
                     </div>
                 </div>
 
-                <div class="flex gap-2 pt-2">
+                <div class="flex gap-2 pt-2 shrink-0">
                     <button onclick="goToStep('stepMain')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition text-sm">취소</button>
                     <button onclick="calculateTodayFreeTime()" class="w-2/3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-100 text-sm">🤖 오늘 짬시간 계산하기</button>
                 </div>
@@ -341,7 +346,7 @@
 
 
             <!-- STEP RESULT: AI 결과 리포트 -->
-            <section id="stepResult" class="step-content hidden max-w-xl mx-auto w-full space-y-5 text-center">
+            <section id="stepResult" class="step-content hidden max-w-xl mx-auto w-full space-y-5 text-center my-auto">
                 
                 <div class="border-b pb-3 text-left flex justify-between items-center">
                     <div>
@@ -374,7 +379,7 @@
 
 
             <!-- STEP ADMIN: 관리자 모드 -->
-            <section id="stepAdmin" class="step-content hidden max-w-2xl mx-auto w-full space-y-5">
+            <section id="stepAdmin" class="step-content hidden max-w-2xl mx-auto w-full space-y-5 my-auto">
                 <div class="border-b pb-3 flex justify-between items-center">
                     <div>
                         <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-full">ADMIN</span>
@@ -439,7 +444,6 @@
             fri: { ...emptyDayData }
         };
 
-        // 시/분 선택 드롭다운 초기화 (분 선택은 오직 00, 10, 20, 30, 40, 50분만 생성)
         function initTimeSelects() {
             timeSelectIds.forEach(id => {
                 const hEl = document.getElementById(id + '_h');
@@ -467,7 +471,6 @@
             });
         }
 
-        // 시/분 입력값을 "HH:MM" 형식 문자열로 가져오기
         function getTimeValue(id) {
             const h = document.getElementById(id + '_h')?.value;
             const m = document.getElementById(id + '_m')?.value;
@@ -475,7 +478,6 @@
             return `${h}:${m}`;
         }
 
-        // "HH:MM" 문자열을 시/분 선택창에 반영하기
         function setTimeValue(id, val) {
             const hEl = document.getElementById(id + '_h');
             const mEl = document.getElementById(id + '_m');
@@ -562,7 +564,7 @@
             const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(val);
 
             if (hasKorean) {
-                errEl.innerHTML = "<span>⚠️</span> 한글이 입력되었습니다. 영문 또는 숫자로 입력해 주세요.";
+                errEl.innerHTML = "<span>⚠️</span> 한글이 입력되었습니다. 영문/숫자로 입력해주세요.";
                 errEl.classList.remove('hidden');
                 input.classList.add('border-red-500', 'ring-2', 'ring-red-500');
                 return false;
@@ -807,14 +809,14 @@
         function resetAllWeeklySchedule() {
             if (!currentUser) return;
 
-            const confirmReset = confirm("⚠️ 주의: 정말 모든 요일의 주간 시간표를 초기화하시겠습니까?\n\n이 작업은 되돌릴 수 없으며 설정해둔 월~금 모든 스케줄 값이 '--' 및 '없음'으로 비워집니다.");
+            const confirmReset = confirm("⚠️ 주의: 정말 모든 요일의 주간 시간표를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.");
             
             if (confirmReset) {
                 currentUser.weekly = JSON.parse(JSON.stringify(emptyWeekly));
                 currentUser.todaySummary = null;
                 saveUserData();
                 switchDayTab(activeDayTab);
-                alert("설정해둔 모든 주간 시간표가 성공적으로 초기화되었습니다.");
+                alert("주간 시간표가 성공적으로 초기화되었습니다.");
             }
         }
 
