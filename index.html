@@ -35,7 +35,7 @@
             <!-- 우측 프로필 / 관리자 / 로그인 상태 -->
             <div class="flex items-center gap-3">
                 <button onclick="openAdminMode()" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1.5 rounded-lg font-bold transition flex items-center gap-1">
-                    <span>⚙️</span> 관리자
+                    <span>⚙️
                 </button>
                 <div id="userBadge" class="hidden flex items-center gap-2">
                     <div class="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center" id="avatarInitial">U</div>
